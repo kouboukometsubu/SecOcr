@@ -28,7 +28,7 @@ namespace SecOcr
             DragDrop += FormMain_DragDrop;
             DragEnter += FormMain_DragEnter;
 
-            appPath = TakanoAppTool.GetRootFolder() + "\\Data";
+           appPath = AppTool.GetRootFolder() + "\\Data";
 
         }
 
