@@ -30,6 +30,8 @@ namespace SecOcr
 
            appPath = AppTool.GetRootFolder() + "\\Data";
 
+           // MessageBox.Show(appPath);
+
         }
 
         private void FormMain_DragEnter(object sender, DragEventArgs e)
@@ -45,13 +47,17 @@ namespace SecOcr
             {
                 //string型でなければ受け入れない
                 e.Effect = DragDropEffects.None;
-            }//throw new NotImplementedException();
+            }
+
         }
 
         private void FormMain_DragDrop(object sender, DragEventArgs e)
         {
+
             string[] fileNames =
             (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            //MessageBox.Show(fileNames[0]);
 
             OpenFile(fileNames[0]);
         }
@@ -71,19 +77,37 @@ namespace SecOcr
             Tesseract.Pix img = null;
             try
             {
-                img = Tesseract.Pix.LoadFromFile(filename);
+                //MessageBox.Show("1:" + filename);
+
+                Tesseract.BitmapToPixConverter conv = new Tesseract.BitmapToPixConverter();
+
+                Bitmap bmp = new Bitmap(filename);
+
+                img = conv.Convert(bmp);// Tesseract.Pix.LoadFromFile(filename);
+              //  MessageBox.Show("2");
+
+
             }
-            catch(ExecutionEngineException ex)
+            catch (ExecutionEngineException ex)
             {
                 Console.WriteLine(ex.ToString());
+                MessageBox.Show(ex.ToString());
+
             }
+
+           // MessageBox.Show("3");
+
             using (var tesseract = new Tesseract.TesseractEngine(langPath, lngStr))
             {
-               
+            // MessageBox.Show("4");
+
                 //tesseract.SetVariable( "VAR_CHAR_WHITELIST", ".,0123456789");
 
                 // OCRの実行
+
                 Tesseract.Page page = tesseract.Process(img);
+
+                //MessageBox.Show("5");
 
                 //表示
                 Console.WriteLine(page.GetText());
