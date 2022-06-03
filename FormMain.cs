@@ -115,7 +115,7 @@ namespace SecOcr
 
                 MessageBox.Show(page.GetText());
 
-                Clipboard.SetText(page.GetText());
+                //Clipboard.SetText(page.GetText());
             }
         }
     }
